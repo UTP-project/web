@@ -8,6 +8,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "target": "es6",
-    "jsx": "react"
+    "jsx": "react",
+    "paths": {
+      "mui": ["./node_modules/@material-ui/core"]
+    }
   }
 }

@@ -9,6 +9,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      mui: path.resolve(__dirname, 'node_modules', '@material-ui/core/'),
+    },
   },
   module: {
     rules: [
