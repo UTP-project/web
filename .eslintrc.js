@@ -5,13 +5,14 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'prettier/react',
+    'prettier/@typescript-eslint',
   ],
   plugins: ['@typescript-eslint/eslint-plugin', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
 
-    'import/no-extraneous-dependencies': 'off',
     'import/extensions': 'off',
+    'import/no-extraneous-dependencies': 'off',
     'react/jsx-filename-extension': [2, { extensions: ['.jsx', '.tsx'] }],
   },
   env: {
@@ -19,9 +20,7 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      typescript: {
-        directory: './',
-      },
+      typescript: {},
     },
   },
 };
