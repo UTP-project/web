@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
@@ -7,7 +9,5 @@
     "noUnusedParameters": true,
     "target": "es6",
     "jsx": "react"
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  }
 }
