@@ -1,5 +1,4 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
   extends: [
     'airbnb',
     'plugin:@typescript-eslint/recommended',
@@ -8,6 +7,13 @@ module.exports = {
     'prettier/@typescript-eslint',
   ],
   plugins: ['@typescript-eslint/eslint-plugin', 'prettier'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    project: './tsconfig.json',
+  },
   rules: {
     'prettier/prettier': 'error',
 
@@ -17,10 +23,5 @@ module.exports = {
   },
   env: {
     browser: true,
-  },
-  settings: {
-    'import/resolver': {
-      typescript: {},
-    },
   },
 };
