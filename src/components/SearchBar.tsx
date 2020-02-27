@@ -8,6 +8,7 @@ import {
   makeStyles,
   createStyles,
   Theme,
+  Tooltip,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '2px 4px',
       display: 'flex',
       alignItems: 'center',
-      width: 400,
+      width: '100%',
     },
     input: {
       flex: 1,
@@ -28,26 +29,25 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const MultiInput: React.FC = () => {
+const SearchBar: React.FC = () => {
   const classes = useStyles();
 
   return (
     <>
-      <Paper className={classes.root}>
+      <Paper className={classes.root} component="form">
         <InputBase
           className={classes.input}
-          placeholder="Search your destination"
+          placeholder="Discovery your travel plan"
         />
-        <IconButton>
-          <Icon>search</Icon>
-        </IconButton>
         <Divider className={classes.divider} orientation="vertical" />
-        <IconButton>
-          <Icon>add_location</Icon>
-        </IconButton>
+        <Tooltip title="Search">
+          <IconButton type="submit">
+            <Icon>search</Icon>
+          </IconButton>
+        </Tooltip>
       </Paper>
     </>
   );
 };
 
-export default MultiInput;
+export default SearchBar;
