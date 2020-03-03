@@ -37,7 +37,7 @@ const SearchBar: React.FC = () => {
       <Paper className={classes.root} component="form">
         <InputBase
           className={classes.input}
-          placeholder="Discovery your travel plan"
+          placeholder="Search you destination"
         />
         <Divider className={classes.divider} orientation="vertical" />
         <Tooltip title="Search">

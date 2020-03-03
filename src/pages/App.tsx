@@ -1,7 +1,8 @@
 import React from 'react';
 import { Container, Box, createStyles, makeStyles } from '@material-ui/core';
+import { Map } from 'react-amap';
 import SearchBar from '../components/SearchBar';
-import YMap from '../components/YMap';
+import { amapkey } from '../common/const';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -9,6 +10,11 @@ const useStyles = makeStyles(() =>
       position: 'fixed',
       left: 0,
       zIndex: 99,
+    },
+    map: {
+      width: '100vw',
+      height: '100vh',
+      zIndex: 0,
     },
   })
 );
@@ -23,8 +29,8 @@ const App: React.FC = () => {
           <SearchBar />
         </Box>
       </Container>
-      <Box zIndex="0">
-        <YMap />
+      <Box className={classes.map}>
+        <Map amapkey={amapkey} />
       </Box>
     </>
   );

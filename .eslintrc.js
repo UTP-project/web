@@ -21,6 +21,7 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react/jsx-filename-extension': [2, { extensions: ['.jsx', '.tsx'] }],
+    'react/prop-types': 'off',
 
     '@typescript-eslint/no-unused-vars': 'error'
   },
