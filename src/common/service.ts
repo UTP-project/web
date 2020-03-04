@@ -45,18 +45,21 @@ const http = <T>(url: string, options: RequestInit = {}): Promise<T> => {
 
 const wrapperHttp = <T>({
   url,
-  params,
+  params = {},
   data,
   options,
   method,
 }: HttpProps): Promise<T> => {
   const paramsString = new URLSearchParams({ ...params }).toString();
   const finalUrl = paramsString ? `${url}?${paramsString}` : url;
-  return http(finalUrl, {
+  const finalOptions = {
     ...options,
     method,
-    body: data ? JSON.stringify(data) : null,
-  });
+  };
+  if (data) {
+    finalOptions.body = JSON.stringify(data);
+  }
+  return http(finalUrl, finalOptions);
 };
 
 export const yGet = <T>(
