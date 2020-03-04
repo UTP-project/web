@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Paper,
   IconButton,
@@ -10,6 +10,8 @@ import {
   Theme,
   Tooltip,
 } from '@material-ui/core';
+import { useDebounce } from 'react-use';
+import { getInputTips } from '../services/InputTips';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,12 +34,36 @@ const useStyles = makeStyles((theme: Theme) =>
 const SearchBar: React.FC = () => {
   const classes = useStyles();
 
+  const [keywords, setKeywords] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
+    console.log(keywords);
+  };
+
+  useDebounce(
+    async () => {
+      if (keywords) {
+        const data = await getInputTips({ keywords });
+        console.log(data);
+      }
+    },
+    500,
+    [keywords]
+  );
+
   return (
     <>
-      <Paper className={classes.root} component="form">
+      <Paper className={classes.root} component="form" onSubmit={handleSubmit}>
         <InputBase
           className={classes.input}
           placeholder="Search you destination"
+          name="keywords"
+          value={keywords}
+          autoComplete="off"
+          onChange={(e): void => {
+            setKeywords(e.target.value);
+          }}
         />
         <Divider className={classes.divider} orientation="vertical" />
         <Tooltip title="Search">
