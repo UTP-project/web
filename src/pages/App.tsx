@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Box, createStyles, makeStyles } from '@material-ui/core';
 import { Map } from 'react-amap';
 import SearchBar from '../components/SearchBar';
-import { amapkey } from '../common/const';
+import { AMAP_KEY_WEB } from '../common/const';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -30,7 +30,7 @@ const App: React.FC = () => {
         </Box>
       </Container>
       <Box className={classes.map}>
-        <Map amapkey={amapkey} />
+        <Map amapkey={AMAP_KEY_WEB} />
       </Box>
     </>
   );
