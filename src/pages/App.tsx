@@ -10,6 +10,8 @@ import {
 import SearchBar from '../components/SearchBar';
 import { AMAP_KEY_WEB } from '../common/const';
 
+import Itinerary from './Itinerary';
+
 const useStyles = makeStyles(() =>
   createStyles({
     main: {
@@ -34,24 +36,7 @@ const App: React.FC = () => {
         <Route exact path="/">
           <Redirect to="/itinerary" />
         </Route>
-        <Route exact path="/itinerary">
-          <div>my itinerary</div>
-        </Route>
-        <Route exact path="/itinerary/new">
-          <Redirect to="/itinerary/new/date" />
-        </Route>
-        <Route exact path="/itinerary/new/date">
-          <div>select date</div>
-        </Route>
-        <Route exact path="/itinerary/new/info">
-          <div>select info</div>
-        </Route>
-        <Route exact path="/itinerary/new/city">
-          <div>select cities</div>
-        </Route>
-        <Route exact path="/itinerary/new/viewpoint">
-          <div>select viewpoints</div>
-        </Route>
+        <Route path="/itinerary" component={Itinerary} />
         <Route exact path="/map">
           <Container className={classes.main} maxWidth="xs">
             <Box marginY={2}>
