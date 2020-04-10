@@ -43,7 +43,7 @@ const ItineraryDate: React.FC = () => {
             返回
           </Button>
           <Typography className={classes.title} />
-          <Button color="inherit" href="/itinerary/info">
+          <Button color="inherit" href="/itinerary/new/info">
             下一步
           </Button>
         </Toolbar>
