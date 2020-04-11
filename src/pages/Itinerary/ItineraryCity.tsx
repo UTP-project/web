@@ -29,18 +29,28 @@ export interface ItineraryCityProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      display: 'flex',
+      flexDirection: 'column',
       height: '100%',
     },
     appbar: {
       background: 'rgb(127, 95, 251)',
-      top: 'auto',
-      bottom: 0,
     },
     mid: {
       flexGrow: 1,
     },
+    view: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexDirection: 'column',
+      flexGrow: 1,
+      padding: 8,
+      overflowY: 'scroll',
+      background: '#eee',
+    },
     searchbar: {
       width: '100%',
+      color: 'inherit',
     },
     chipRoot: {
       display: 'flex',
@@ -104,8 +114,54 @@ const ItineraryCity: React.FC<ItineraryCityProps> = ({
   );
 
   return (
-    <>
-      <AppBar className={classes.appbar} position="fixed">
+    <div className={classes.root}>
+      <AppBar className={classes.appbar} position="sticky">
+        <Toolbar>
+          <Typography variant="h6" className={classes.mid}>
+            选择城市
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.view}>
+        <Box width="100%" paddingX={2} marginY={2}>
+          <TextField
+            className={classes.searchbar}
+            value={keywords}
+            placeholder="请在此输入城市名称"
+            onChange={handleChange}
+            autoFocus
+          />
+        </Box>
+        <Box className={classes.chipRoot}>
+          {selectedCities.map(city => (
+            <Chip
+              className={classes.chip}
+              key={city.citycode}
+              label={city.name}
+              variant="outlined"
+              color="secondary"
+              onDelete={handleDelete(city)}
+            />
+          ))}
+        </Box>
+        <List>
+          {cityCandidate.map((cand, idx) => (
+            <ListItem key={cand.citycode}>
+              <ListItemText>{cand.name}</ListItemText>
+              <ListItemSecondaryAction>
+                {!isSelected(cand) && (
+                  <IconButton edge="end" onClick={handleAdd(idx)}>
+                    <Icon style={{ color: 'rgb(146, 118, 255)' }}>
+                      add_circle
+                    </Icon>
+                  </IconButton>
+                )}
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+      </div>
+      <AppBar className={classes.appbar} position="static">
         <Toolbar>
           <Button color="inherit">
             <Link
@@ -126,44 +182,7 @@ const ItineraryCity: React.FC<ItineraryCityProps> = ({
           </Button>
         </Toolbar>
       </AppBar>
-      <Box width="100%" paddingX={2} marginY={2}>
-        <TextField
-          className={classes.searchbar}
-          value={keywords}
-          placeholder="请在此输入城市名称"
-          onChange={handleChange}
-          autoFocus
-        />
-      </Box>
-      <Box className={classes.chipRoot}>
-        {selectedCities.map(city => (
-          <Chip
-            className={classes.chip}
-            key={city.citycode}
-            label={city.name}
-            variant="outlined"
-            color="secondary"
-            onDelete={handleDelete(city)}
-          />
-        ))}
-      </Box>
-      <List>
-        {cityCandidate.map((cand, idx) => (
-          <ListItem key={cand.citycode}>
-            <ListItemText>{cand.name}</ListItemText>
-            <ListItemSecondaryAction>
-              {!isSelected(cand) && (
-                <IconButton edge="end" onClick={handleAdd(idx)}>
-                  <Icon style={{ color: 'rgb(146, 118, 255)' }}>
-                    add_circle
-                  </Icon>
-                </IconButton>
-              )}
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-      </List>
-    </>
+    </div>
   );
 };
 

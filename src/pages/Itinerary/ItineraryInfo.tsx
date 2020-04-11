@@ -31,19 +31,27 @@ export interface ItineraryInfoProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      display: 'flex',
+      flexDirection: 'column',
       height: '100%',
     },
     appbar: {
       background: 'rgb(127, 95, 251)',
-      top: 'auto',
-      bottom: 0,
     },
     mid: {
       flexGrow: 1,
     },
+    view: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexGrow: 1,
+      padding: 8,
+      overflowY: 'scroll',
+      background: '#eee',
+    },
     formContainer: {
-      marginTop: 60,
-      height: window.innerHeight * 0.8 - 60,
+      marginTop: 40,
+      marginBottom: 40,
     },
     formControl: {
       margin: theme.spacing(1),
@@ -89,29 +97,15 @@ const ItineraryInfo: React.FC<ItineraryInfoProps> = ({
   };
 
   return (
-    <>
-      <div className={classes.root}>
-        <AppBar className={classes.appbar} position="fixed">
-          <Toolbar>
-            <Button color="inherit">
-              <Link
-                to="/itinerary/new/date"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                上一步
-              </Link>
-            </Button>
-            <Typography className={classes.mid} />
-            <Button color="inherit">
-              <Link
-                to="/itinerary/new/city"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                下一步
-              </Link>
-            </Button>
-          </Toolbar>
-        </AppBar>
+    <div className={classes.root}>
+      <AppBar className={classes.appbar} position="sticky">
+        <Toolbar>
+          <Typography variant="h6" className={classes.mid}>
+            信息填写
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.view}>
         <Grid
           className={classes.formContainer}
           container
@@ -184,7 +178,28 @@ const ItineraryInfo: React.FC<ItineraryInfoProps> = ({
           </FormControl>
         </Grid>
       </div>
-    </>
+      <AppBar className={classes.appbar} position="static">
+        <Toolbar>
+          <Button color="inherit">
+            <Link
+              to="/itinerary/new/date"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              上一步
+            </Link>
+          </Button>
+          <Typography className={classes.mid} />
+          <Button color="inherit">
+            <Link
+              to="/itinerary/new/city"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              下一步
+            </Link>
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 

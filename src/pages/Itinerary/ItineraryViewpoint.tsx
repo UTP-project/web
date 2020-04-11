@@ -143,7 +143,7 @@ const ItineraryViewpoint: React.FC<ItineraryViewpointProps> = ({
           </Card>
         ))}
       </div>
-      <AppBar className={classes.appbar} position="sticky">
+      <AppBar className={classes.appbar} position="static">
         <Toolbar>
           <Button color="inherit">
             <Link
