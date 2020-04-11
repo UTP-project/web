@@ -17,6 +17,7 @@ import {
   Icon,
   Chip,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { useDebounce } from 'react-use';
 import { fetchCity, District } from '../../services/FetchCity';
 
@@ -106,16 +107,22 @@ const ItineraryCity: React.FC<ItineraryCityProps> = ({
     <>
       <AppBar className={classes.appbar} position="fixed">
         <Toolbar>
-          <Button color="inherit" href="/itinerary/new/info">
-            上一步
+          <Button color="inherit">
+            <Link
+              to="/itinerary/new/info"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              上一步
+            </Link>
           </Button>
           <Typography className={classes.mid} />
-          <Button
-            color="inherit"
-            href="/itinerary/new/viewpoint"
-            disabled={!selectedCities.length}
-          >
-            下一步
+          <Button color="inherit" disabled={!selectedCities.length}>
+            <Link
+              to="/itinerary/new/viewpoint"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              下一步
+            </Link>
           </Button>
         </Toolbar>
       </AppBar>

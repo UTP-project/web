@@ -15,6 +15,7 @@ import {
   FormControl,
   Grid,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 export interface ItineraryInfoProps {
   peopleNum: string;
@@ -92,12 +93,22 @@ const ItineraryInfo: React.FC<ItineraryInfoProps> = ({
       <div className={classes.root}>
         <AppBar className={classes.appbar} position="fixed">
           <Toolbar>
-            <Button color="inherit" href="/itinerary/new/date">
-              上一步
+            <Button color="inherit">
+              <Link
+                to="/itinerary/new/date"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                上一步
+              </Link>
             </Button>
             <Typography className={classes.mid} />
-            <Button color="inherit" href="/itinerary/new/city">
-              下一步
+            <Button color="inherit">
+              <Link
+                to="/itinerary/new/city"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                下一步
+              </Link>
             </Button>
           </Toolbar>
         </AppBar>

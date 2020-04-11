@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import {} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import '../index.css';
 
@@ -45,12 +45,22 @@ const ItineraryDate: React.FC<ItineraryDateProps> = ({ start, end }) => {
     <>
       <AppBar className={classes.appbar} position="fixed">
         <Toolbar>
-          <Button color="inherit" href="/itinerary">
-            返回
+          <Button color="inherit">
+            <Link
+              to="/itinerary"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              返回
+            </Link>
           </Button>
           <Typography className={classes.title} />
-          <Button color="inherit" href="/itinerary/new/info">
-            下一步
+          <Button color="inherit">
+            <Link
+              to="/itinerary/new/info"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              下一步
+            </Link>
           </Button>
         </Toolbar>
       </AppBar>
