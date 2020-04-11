@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
-import IfiniteCalendar, { Calendar, withRange } from 'react-infinite-calendar';
+import React from 'react';
+import IfiniteCalendar, {
+  Calendar,
+  withRange,
+  DateType,
+} from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 import zhCN from 'date-fns/locale/zh_cn';
 import {
@@ -13,6 +17,11 @@ import {
 import {} from 'react-router-dom';
 
 import '../index.css';
+
+export interface ItineraryDateProps {
+  start: DateType;
+  end: DateType;
+}
 
 const CalendarWithRange = withRange(Calendar);
 
@@ -29,11 +38,8 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const ItineraryDate: React.FC = () => {
+const ItineraryDate: React.FC<ItineraryDateProps> = ({ start, end }) => {
   const classes = useStyles();
-
-  const [start] = useState(new Date());
-  const [end] = useState(new Date());
 
   return (
     <>

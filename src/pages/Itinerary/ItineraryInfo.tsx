@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import '../index.css';
 import {
@@ -15,6 +15,17 @@ import {
   FormControl,
   Grid,
 } from '@material-ui/core';
+
+export interface ItineraryInfoProps {
+  peopleNum: string;
+  crowdType: string;
+  travelMode: string;
+  dayTime: string;
+  setPeopleNum: React.Dispatch<React.SetStateAction<string>>;
+  setCrowdType: React.Dispatch<React.SetStateAction<string>>;
+  setTravelMode: React.Dispatch<React.SetStateAction<string>>;
+  setDayTime: React.Dispatch<React.SetStateAction<string>>;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,13 +51,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ItineraryInfo: React.FC = () => {
+const ItineraryInfo: React.FC<ItineraryInfoProps> = ({
+  peopleNum,
+  crowdType,
+  travelMode,
+  dayTime,
+  setPeopleNum,
+  setCrowdType,
+  setTravelMode,
+  setDayTime,
+}) => {
   const classes = useStyles();
-
-  const [peopleNum, setPeopleNum] = useState('0');
-  const [crowdType, setCrowdType] = useState('0');
-  const [travelMode, setTravelMode] = useState('0');
-  const [dayTime, setDayTime] = useState('0');
 
   const handlePeopleNumChange = (
     event: React.ChangeEvent<{ value: unknown }>

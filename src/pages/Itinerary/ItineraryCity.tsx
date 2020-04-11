@@ -20,6 +20,11 @@ import {
 import { useDebounce } from 'react-use';
 import { fetchCity, District } from '../../services/FetchCity';
 
+export interface ItineraryCityProps {
+  selectedCities: District[];
+  setSelectedCities: React.Dispatch<React.SetStateAction<District[]>>;
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -48,12 +53,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ItineraryCity: React.FC = () => {
+const ItineraryCity: React.FC<ItineraryCityProps> = ({
+  selectedCities,
+  setSelectedCities,
+}) => {
   const classes = useStyles();
 
   const [keywords, setKeywords] = useState('');
   const [cityCandidate, setCityCandidate] = useState<District[]>([]);
-  const [selectedCities, setSelectedCities] = useState<District[]>([]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
     setKeywords(event.target.value as string);
