@@ -5,6 +5,7 @@ import ItineraryInfo from './ItineraryInfo';
 import ItineraryCity from './ItineraryCity';
 import ItineraryViewpoint from './ItineraryViewpoint';
 import { District } from '../../services/FetchCity';
+import { Poi } from '../../services/FetchViewpoint';
 
 const ItineraryNew: React.FC = () => {
   const [start] = useState(new Date());
@@ -14,6 +15,7 @@ const ItineraryNew: React.FC = () => {
   const [travelMode, setTravelMode] = useState('0');
   const [dayTime, setDayTime] = useState('0');
   const [selectedCities, setSelectedCities] = useState<District[]>([]);
+  const [selectedViewpoints, setSelectedViewpoints] = useState<Poi[]>([]);
 
   return (
     <Switch>
@@ -41,11 +43,13 @@ const ItineraryNew: React.FC = () => {
           setSelectedCities={setSelectedCities}
         />
       </Route>
-      <Route
-        exact
-        path="/itinerary/new/viewpoint"
-        component={ItineraryViewpoint}
-      />
+      <Route exact path="/itinerary/new/viewpoint">
+        <ItineraryViewpoint
+          selectedCities={selectedCities}
+          selectedViewpoints={selectedViewpoints}
+          setSelectedViewpoints={setSelectedViewpoints}
+        />
+      </Route>
     </Switch>
   );
 };
