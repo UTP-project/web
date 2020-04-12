@@ -23,6 +23,7 @@ export interface ItineraryViewpointProps {
   selectedCities: District[];
   selectedViewpoints: Poi[];
   setSelectedViewpoints: React.Dispatch<React.SetStateAction<Poi[]>>;
+  handleGenerate: () => void;
 }
 
 const useStyles = makeStyles(() =>
@@ -65,6 +66,7 @@ const ItineraryViewpoint: React.FC<ItineraryViewpointProps> = ({
   selectedCities,
   selectedViewpoints,
   setSelectedViewpoints,
+  handleGenerate,
 }) => {
   const classes = useStyles();
 
@@ -80,10 +82,6 @@ const ItineraryViewpoint: React.FC<ItineraryViewpointProps> = ({
 
   const handleSelelct = (viewpoint: Poi) => (): void => {
     setSelectedViewpoints([...selectedViewpoints, viewpoint]);
-  };
-
-  const handleGenerate = (): void => {
-    // console.log(selectedViewpoints);
   };
 
   useEffect(() => {
