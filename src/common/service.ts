@@ -65,20 +65,22 @@ const wrapperHttp = <T>({
 export const yGet = <T>(
   url: string,
   params: object,
-  options: object = {}
+  options: RequestInit = {}
 ): Promise<T> => wrapperHttp({ url, params, options });
 
 export const yPost = <T>(
   url: string,
   data: object,
-  options: object = {}
+  options: RequestInit = {}
 ): Promise<T> => wrapperHttp({ url, data, options, method: 'POST' });
 
 export const yPut = <T>(
   url: string,
   data: object,
-  options: object = {}
+  options: RequestInit = {}
 ): Promise<T> => wrapperHttp({ url, data, options, method: 'PUT' });
 
-export const yDelete = <T>(url: string, options: object = {}): Promise<T> =>
-  wrapperHttp({ url, options, method: 'DELETE' });
+export const yDelete = <T>(
+  url: string,
+  options: RequestInit = {}
+): Promise<T> => wrapperHttp({ url, options, method: 'DELETE' });

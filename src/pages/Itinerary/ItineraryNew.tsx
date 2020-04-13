@@ -7,6 +7,7 @@ import ItineraryViewpoint from './ItineraryViewpoint';
 import { District } from '../../services/FetchCity';
 import { Poi } from '../../services/FetchViewpoint';
 import { fetchDistance } from '../../services/FetchDistance';
+import { fetchRoute } from '../../services/FetchRoute';
 import { list2symMatrix } from '../../common/utils';
 
 const ItineraryNew: React.FC = () => {
@@ -18,6 +19,7 @@ const ItineraryNew: React.FC = () => {
   const [dayTime, setDayTime] = useState('0');
   const [selectedCities, setSelectedCities] = useState<District[]>([]);
   const [selectedViewpoints, setSelectedViewpoints] = useState<Poi[]>([]);
+  const [routes, setRoutes] = useState<number[][] | undefined>([]);
 
   const handleGenerate = async (): Promise<void> => {
     // fetch route info
@@ -36,9 +38,19 @@ const ItineraryNew: React.FC = () => {
     const distMatrix = list2symMatrix(selectedViewpoints.length, distList);
     const durMatrix = list2symMatrix(selectedViewpoints.length, durList);
 
-    console.log(distMatrix);
-    console.log(durMatrix);
     // get route
+    const res = await fetchRoute({
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      dist_matrix: distMatrix,
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      dur_matrix: durMatrix,
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      day_limit_time: +dayTime + 3,
+    });
+    if (res.status) {
+      setRoutes(res.routes);
+      console.log(routes);
+    }
   };
 
   return (
