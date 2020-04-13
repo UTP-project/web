@@ -24,3 +24,28 @@ export const list2symMatrix = <T>(len: number, list: T[]): T[][] => {
   }
   return symMatrix;
 };
+
+export const sleep = (timeout: number): Promise<void> => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, timeout);
+  });
+};
+
+export const promiseWait = async <T1, T2>(
+  list: T1[],
+  func: (params: T1) => Promise<T2>,
+  limit: number,
+  timeout: number
+): Promise<T2[]> => {
+  const tail = list.splice(limit);
+  const head = list.map(el => func(el));
+  let res = await Promise.all(head);
+  if (tail.length) {
+    await sleep(timeout);
+    const nextRes = await promiseWait(tail, func, limit, timeout);
+    res = [...res, ...nextRes];
+  }
+  return res;
+};
