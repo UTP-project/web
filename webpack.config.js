@@ -33,7 +33,21 @@ module.exports = {
   },
   devServer: {
     host: '0.0.0.0',
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/api': {
+        target: 'http://0.0.0.0:8000',
+        pathRewrite: {'^/api' : ''},
+        onProxyRes: function(proxyRes, req, res) {
+          //Handling api server redirects
+          if ([301, 302, 307, 308].indexOf(proxyRes.statusCode) > -1 && proxyRes.headers.location) {
+              let redirect = proxyRes.headers.location;
+              redirect = '/api' + redirect;
+              proxyRes.headers.location = redirect;
+          }
+        }
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
