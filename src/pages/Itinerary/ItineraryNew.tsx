@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { FullLngLatPos } from 'react-amap';
 import ItineraryDate from './ItineraryDate';
 import ItineraryInfo from './ItineraryInfo';
 import ItineraryCity from './ItineraryCity';
 import ItineraryViewpoint from './ItineraryViewpoint';
+import ItineraryRes from './ItineraryRes';
 import { District } from '../../services/FetchCity';
 import { Poi } from '../../services/FetchViewpoint';
 import { fetchDistance } from '../../services/FetchDistance';
@@ -19,7 +21,7 @@ const ItineraryNew: React.FC = () => {
   const [dayTime, setDayTime] = useState('0');
   const [selectedCities, setSelectedCities] = useState<District[]>([]);
   const [selectedViewpoints, setSelectedViewpoints] = useState<Poi[]>([]);
-  const [routes, setRoutes] = useState<number[][] | undefined>([]);
+  const [routes, setRoutes] = useState<FullLngLatPos[][] | undefined>([]);
 
   const handleGenerate = async (): Promise<void> => {
     // fetch route info
@@ -48,8 +50,15 @@ const ItineraryNew: React.FC = () => {
       day_limit_time: +dayTime + 3,
     });
     if (res.status) {
-      setRoutes(res.routes);
-      console.log(routes);
+      if (res.routes) {
+        const optRoutes = res.routes.map(subRoute =>
+          subRoute.map(pointIdx => {
+            const pos = selectedViewpoints[pointIdx - 1].location.split(',');
+            return { longitude: +pos[0], latitude: +pos[1] };
+          })
+        );
+        setRoutes(optRoutes);
+      }
     }
   };
 
@@ -86,6 +95,9 @@ const ItineraryNew: React.FC = () => {
           setSelectedViewpoints={setSelectedViewpoints}
           handleGenerate={handleGenerate}
         />
+      </Route>
+      <Route exact path="/itinerary/new/result">
+        <ItineraryRes routes={routes} />
       </Route>
     </Switch>
   );

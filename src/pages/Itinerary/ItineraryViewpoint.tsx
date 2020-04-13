@@ -157,7 +157,12 @@ const ItineraryViewpoint: React.FC<ItineraryViewpointProps> = ({
             disabled={!selectedViewpoints.length}
             onClick={handleGenerate}
           >
-            开始生成
+            <Link
+              to="/itinerary/new/result"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              开始生成
+            </Link>
           </Button>
         </Toolbar>
       </AppBar>
