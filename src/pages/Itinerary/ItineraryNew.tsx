@@ -26,17 +26,19 @@ const ItineraryNew: React.FC = () => {
   const handleGenerate = async (): Promise<void> => {
     // fetch route info
     const paramList = [];
-    for (let i = 0; i < selectedViewpoints.length; i += 1) {
+    for (let i = 0; i < selectedViewpoints.length - 1; i += 1) {
+      const destination = selectedViewpoints[i].location;
+      let origins = '';
       for (let j = i + 1; j < selectedViewpoints.length; j += 1) {
-        const origins = selectedViewpoints[i].location;
-        const destination = selectedViewpoints[j].location;
-        paramList.push({ origins, destination });
+        origins += `${selectedViewpoints[j].location}|`;
       }
+      paramList.push({ origins, destination });
     }
     const resList = await promiseWait(paramList, fetchDistance, 10, 300);
+    const flatRes = resList.reduce((acc, cur) => [...acc, ...cur.results], []);
 
-    const distList = resList.map(res => +res.results[0].distance);
-    const durList = resList.map(res => +res.results[0].duration);
+    const distList = flatRes.map(res => +res.distance);
+    const durList = flatRes.map(res => +res.duration);
     const distMatrix = list2symMatrix(selectedViewpoints.length, distList);
     const durMatrix = list2symMatrix(selectedViewpoints.length, durList);
 
