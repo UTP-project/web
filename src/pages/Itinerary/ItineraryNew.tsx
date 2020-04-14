@@ -33,7 +33,7 @@ const ItineraryNew: React.FC = () => {
         paramList.push({ origins, destination });
       }
     }
-    const resList = await promiseWait(paramList, fetchDistance, 10, 200);
+    const resList = await promiseWait(paramList, fetchDistance, 10, 300);
 
     const distList = resList.map(res => +res.results[0].distance);
     const durList = resList.map(res => +res.results[0].duration);

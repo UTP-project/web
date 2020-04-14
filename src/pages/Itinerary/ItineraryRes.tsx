@@ -50,7 +50,7 @@ const ItineraryRes: React.FC<ItineraryResProps> = ({ routes }) => {
   const classes = useStyles();
 
   const [center, setCenter] = useState<FullLngLatPos | undefined>();
-  const [zoom] = useState(11);
+  const [zoom] = useState(13);
 
   useEffect(() => {
     if (routes) {
@@ -111,7 +111,7 @@ const ItineraryRes: React.FC<ItineraryResProps> = ({ routes }) => {
                 <Polyline
                   key={subRoute.id}
                   path={subRoute.locations}
-                  style={{ strokeColor: subRoute.color }}
+                  style={{ strokeColor: subRoute.color, strokeWeight: 6 }}
                 />
               ))}
         </Map>
