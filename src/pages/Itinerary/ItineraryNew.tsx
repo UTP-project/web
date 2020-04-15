@@ -21,26 +21,47 @@ const ItineraryNew: React.FC = () => {
   const [dayTime, setDayTime] = useState('0');
   const [selectedCities, setSelectedCities] = useState<District[]>([]);
   const [selectedViewpoints, setSelectedViewpoints] = useState<Poi[]>([]);
+  const [center, setCenter] = useState<FullLngLatPos>();
   const [routes, setRoutes] = useState<FullLngLatPos[][] | undefined>([]);
 
   const handleGenerate = async (): Promise<void> => {
-    // fetch route info
+    // get locations of viewpoints
+    const locations = selectedViewpoints.map(point => point.location);
+    const len = locations.length;
+    // calculate center point
+    let lngSum = 0;
+    let latSum = 0;
+    locations.forEach(locStr => {
+      const [lng, lat] = locStr.split(',');
+      lngSum += +lng;
+      latSum += +lat;
+    });
+    const centerPoint = {
+      longitude: Math.round((lngSum / len) * 1000 * 1000) / (1000 * 1000),
+      latitude: Math.round((latSum / len) * 1000 * 1000) / (1000 * 1000),
+    };
+    const centerLocation = `${centerPoint.longitude},${centerPoint.latitude}`;
+    locations.unshift(centerLocation);
+    setCenter(centerPoint);
+    // init params list of fetchDistance
     const paramList = [];
-    for (let i = 0; i < selectedViewpoints.length - 1; i += 1) {
-      const destination = selectedViewpoints[i].location;
+    for (let i = 0; i < len - 1; i += 1) {
+      const destination = locations[i];
       let origins = '';
-      for (let j = i + 1; j < selectedViewpoints.length; j += 1) {
-        origins += `${selectedViewpoints[j].location}|`;
+      for (let j = i + 1; j < len; j += 1) {
+        origins += `${locations[j]}|`;
       }
       paramList.push({ origins, destination });
     }
+    // limit promise number & get distance, duration
     const resList = await promiseWait(paramList, fetchDistance, 10, 300);
     const flatRes = resList.reduce((acc, cur) => [...acc, ...cur.results], []);
 
+    // change list to sysmmetric
     const distList = flatRes.map(res => +res.distance);
     const durList = flatRes.map(res => +res.duration);
-    const distMatrix = list2symMatrix(selectedViewpoints.length, distList);
-    const durMatrix = list2symMatrix(selectedViewpoints.length, durList);
+    const distMatrix = list2symMatrix(len, distList);
+    const durMatrix = list2symMatrix(len, durList);
 
     // get route
     const res = await fetchRoute({
@@ -55,7 +76,7 @@ const ItineraryNew: React.FC = () => {
       if (res.routes) {
         const optRoutes = res.routes.map(subRoute =>
           subRoute.map(pointIdx => {
-            const pos = selectedViewpoints[pointIdx - 1].location.split(',');
+            const pos = locations[pointIdx].split(',');
             return { longitude: +pos[0], latitude: +pos[1] };
           })
         );
@@ -99,7 +120,7 @@ const ItineraryNew: React.FC = () => {
         />
       </Route>
       <Route exact path="/itinerary/new/result">
-        <ItineraryRes routes={routes} />
+        <ItineraryRes center={center} routes={routes} />
       </Route>
     </Switch>
   );

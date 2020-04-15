@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   createStyles,
@@ -13,6 +13,7 @@ import { AMAP_KEY_WEB, colorRoulette } from '../../common/const';
 import '../index.css';
 
 export interface ItineraryResProps {
+  center: FullLngLatPos | undefined;
   routes: FullLngLatPos[][] | undefined;
 }
 
@@ -46,43 +47,41 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const ItineraryRes: React.FC<ItineraryResProps> = ({ routes }) => {
+const ItineraryRes: React.FC<ItineraryResProps> = ({ center, routes }) => {
   const classes = useStyles();
 
-  const [center, setCenter] = useState<FullLngLatPos | undefined>();
   const [zoom] = useState(13);
 
-  useEffect(() => {
-    if (routes) {
-      // calculate center point
-      let lngMax = -180;
-      let lngMin = 180;
-      let latMax = -90;
-      let latMin = 90;
-      for (let i = 0; i < routes.length; i += 1) {
-        for (let j = 0; j < routes[i].length; j += 1) {
-          lngMax =
-            routes[i][j].longitude > lngMax ? routes[i][j].longitude : lngMax;
-          lngMin =
-            routes[i][j].longitude < lngMin ? routes[i][j].longitude : lngMin;
-          latMax =
-            routes[i][j].latitude > latMax ? routes[i][j].latitude : latMax;
-          latMin =
-            routes[i][j].latitude < latMin ? routes[i][j].latitude : latMin;
-        }
-      }
-      const newCenter = {
-        longitude: (lngMax + lngMin) / 2,
-        latitude: (latMax + latMin) / 2,
-      };
-      setCenter(newCenter);
-      // add center into routes
-      for (let i = 0; i < routes.length; i += 1) {
-        routes[i].unshift(newCenter);
-        routes[i].push(newCenter);
-      }
-    }
-  }, [routes]);
+  // useEffect(() => {
+  //   if (routes) {
+  //     // calculate center point
+  //     let lngMax = -180;
+  //     let lngMin = 180;
+  //     let latMax = -90;
+  //     let latMin = 90;
+  //     for (let i = 0; i < routes.length; i += 1) {
+  //       for (let j = 0; j < routes[i].length; j += 1) {
+  //         lngMax =
+  //           routes[i][j].longitude > lngMax ? routes[i][j].longitude : lngMax;
+  //         lngMin =
+  //           routes[i][j].longitude < lngMin ? routes[i][j].longitude : lngMin;
+  //         latMax =
+  //           routes[i][j].latitude > latMax ? routes[i][j].latitude : latMax;
+  //         latMin =
+  //           routes[i][j].latitude < latMin ? routes[i][j].latitude : latMin;
+  //       }
+  //     }
+  //     const newCenter = {
+  //       longitude: (lngMax + lngMin) / 2,
+  //       latitude: (latMax + latMin) / 2,
+  //     };
+  //     // add center into routes
+  //     for (let i = 0; i < routes.length; i += 1) {
+  //       routes[i].unshift(newCenter);
+  //       routes[i].push(newCenter);
+  //     }
+  //   }
+  // }, [routes]);
 
   return (
     <div className={classes.root}>
