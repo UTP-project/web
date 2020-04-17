@@ -7,14 +7,14 @@ import {
   Typography,
   Box,
 } from '@material-ui/core';
-import { Map, Polyline, FullLngLatPos } from 'react-amap';
+import { Map, Polyline, ArrayLngLat } from 'react-amap';
 import { AMAP_KEY_WEB, colorRoulette } from '../../common/const';
 
 import '../index.css';
 
 export interface ItineraryResProps {
-  center: FullLngLatPos | undefined;
-  routes: FullLngLatPos[][] | undefined;
+  center: ArrayLngLat | undefined;
+  routes: ArrayLngLat[][] | undefined;
 }
 
 const useStyles = makeStyles(() =>

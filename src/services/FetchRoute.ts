@@ -1,6 +1,8 @@
+import { ArrayLngLat } from 'react-amap';
 import { yPost } from '../common/service';
 
 export interface FetchRouteData {
+  locations?: ArrayLngLat[];
   dist_matrix: number[][];
   dur_matrix: number[][];
   day_limit_time?: number;
